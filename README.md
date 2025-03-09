@@ -2,7 +2,8 @@
 
 # API Gateway
 
-API Gateway 모듈은 모든 클라이언트 요청의 진입점 역할을 하는 Spring Cloud Gateway 기반 서비스입니다.\ 
+API Gateway 모듈은 모든 클라이언트 요청의 진입점 역할을 하는 Spring Cloud Gateway 기반 서비스입니다.
+ 
 이 모듈은 인증/인가 검증, 요청 라우팅, 그리고 분산 추적을 담당합니다.
 
 ## 초기 형태
