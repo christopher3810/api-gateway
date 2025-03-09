@@ -1,3 +1,5 @@
+![gateway](https://github.com/user-attachments/assets/89147d58-d624-42b0-8fb6-729dc51da412)
+
 # API Gateway
 
 API Gateway 모듈은 모든 클라이언트 요청의 진입점 역할을 하는 Spring Cloud Gateway 기반 서비스입니다.\ 
