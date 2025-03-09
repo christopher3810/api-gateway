@@ -2,27 +2,21 @@
 
 # API Gateway
 
-API Gateway 모듈은 모든 클라이언트 요청의 진입점 역할을 하는 Spring Cloud Gateway 기반 서비스입니다.
+API Gateway 는 Micro Service 들의 진입점 역할을 하는 Spring Cloud Gateway 기반 서비스.
  
-이 모듈은 인증/인가 검증, 요청 라우팅, 그리고 분산 추적을 담당합니다.
-
-## 초기 형태
-
-tars project auth lib 기능을 base로 확장.
+이 모듈은 요청 라우팅, 로드 밸런싱, 서킷 브레이킹, 토큰 전달 및 분산 추적을 담당.
 
 ## 주요 기능
 
-- **중앙화된 라우팅**: 모든 마이크로서비스로의 요청을 단일 진입점에서 관리
-- **인증/인가 필터**: JWT 토큰 기반 인증 및 권한 검증
-- **분산 추적**: micrometer 를 통한 요청 추적 및 모니터링
+- **요청 라우팅**: 각 마이크로서비스로 요청을 적절히 전달
+- **로드 밸런싱**: 서비스 인스턴스 간 부하 분산 (Eureka 의존성 없이 구현)
+- **서킷 브레이커**: 장애 격리 및 복원력 제공 (Resilience4j 활용)
+- **토큰 확인 및 전달**: 최소한의 토큰 유효성 확인 및 하위 서비스로 전달
+- **분산 추적**: Micrometer Tracing을 통한 TraceID 생성 및 전파
+- **간단한 요청 제한**: 서비스별 기본 제한 설정
 
-## 기술 스택
+## Redis 활용
 
-- Spring Cloud Gateway 2023.0.1
-- Spring Boot 3.4.3
-- micrometer (분산 추적)
-- Kotlin 2.0.0
-- JWT (JSON Web Token) 0.12.6
-
-## redis 활용
-고민중
+Redis 는 다음 용도로 제한적으로 사용할까 고민중
+- 요청 제한(Rate Limiting) 정보 저장 (필요시)
+- 서킷 브레이커 상태 공유 (선택적)
