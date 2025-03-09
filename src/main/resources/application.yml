@@ -1,0 +1,71 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: http://localhost:8081  # Auth 서비스 직접 주소
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            
+        - id: user-service
+          uri: http://localhost:8082  # User 서비스 직접 주소
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
+            - name: AuthenticationFilter
+              args:
+                enabled: true
+                excludedPaths: /public/**
+                
+        # 추가 서비스 경로 설정...
+  
+  # Redis 설정 (토큰 블랙리스트 관리용)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      
+  # Micrometer Tracing 설정 (분산 추적)
+  tracing:
+    sampling:
+      probability: 1.0  # 모든 요청을 추적 (프로덕션에서는 낮은 값 권장)
+    enabled: true
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans  # Zipkin 서버 주소
+    enabled: true
+      
+# JWT 관련 설정
+jwt:
+  secret: apiGatewaySecretKeyForJwtAuthenticationPleaseOverrideInProduction
+  access-expiration-ms: 3600000  # 1시간
+  refresh-expiration-ms: 86400000  # 24시간
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+    io.micrometer.tracing: DEBUG
