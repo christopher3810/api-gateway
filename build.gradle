@@ -20,14 +20,14 @@ ext {
 }
 
 dependencies {
-    // Spring Cloud Gateway - 명시적으로 제외
-    implementation('org.springframework.cloud:spring-cloud-starter-gateway')
-    
+    // Spring Cloud Gateway
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
     // Micrometer Tracing (Spring Cloud Sleuth 대체)
-    implementation 'io.micrometer:micrometer-tracing:1.2.3'
-    implementation 'io.micrometer:micrometer-tracing-bridge-brave:1.2.3'
-    implementation 'io.zipkin.reporter2:zipkin-reporter-brave:3.3.0'
-    
+    implementation 'io.micrometer:micrometer-tracing'
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
     // Spring Boot Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
